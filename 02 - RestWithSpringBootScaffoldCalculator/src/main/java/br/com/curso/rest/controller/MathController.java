@@ -2,6 +2,7 @@ package br.com.curso.rest.controller;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,12 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.curso.rest.conversion.NumberConversion;
 import br.com.curso.rest.exception.UnSuportedMathOperationException;
-import br.com.curso.rest.math.SimpleMath;
+import br.com.curso.rest.services.SimpleService;
 
 @RestController
 public class MathController {
 
-	SimpleMath math = new SimpleMath();
+	@Autowired
+	SimpleService services;
 	
 	// Operação de soma
 	@RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = RequestMethod.GET)
@@ -24,7 +26,7 @@ public class MathController {
 		if (!NumberConversion.isNumeric(numberOne) || !NumberConversion.isNumeric(numberTwo)) {
 			throw new UnSuportedMathOperationException("Please set a numeric value!");
 		}
-		return math.sum(numberOne, numberTwo);
+		return services.sum(numberOne, numberTwo);
 	}
 
 	// Operação de subtração
@@ -34,7 +36,7 @@ public class MathController {
 		if (!NumberConversion.isNumeric(numberOne) || !NumberConversion.isNumeric(numberTwo)) {
 			throw new UnSuportedMathOperationException("Please set a numeric value !");
 		}
-		return math.subtraction(numberOne, numberTwo);
+		return services.subtraction(numberOne, numberTwo);
 	}
 
 	// Operação de multiplicação
@@ -43,7 +45,7 @@ public class MathController {
 		if (!NumberConversion.isNumeric(numberOne) || !NumberConversion.isNumeric(numberTwo)) {
 			throw new UnSuportedMathOperationException("Please set a numeric value !");
 		}
-		return math.multiplication(numberOne, numberTwo);
+		return services.multiplication(numberOne, numberTwo);
 	}
 
 	// Operação de divisão
@@ -52,7 +54,7 @@ public class MathController {
 		if (!NumberConversion.isNumeric(numberOne) || !NumberConversion.isNumeric(numberTwo)) {
 			throw new UnSuportedMathOperationException("Please set a numeric value !");
 		}
-	    return math.division(numberOne, numberTwo);	
+	    return services.division(numberOne, numberTwo);	
 	}
 
 	// Operação de média
@@ -62,7 +64,7 @@ public class MathController {
 		if (!NumberConversion.isNumeric(numberOne) || !NumberConversion.isNumeric(numberTwo)) {
 			throw new UnSuportedMathOperationException("Please set a numeric value !");
 		}
-		return math.mean(numberOne, numberTwo);
+		return services.mean(numberOne, numberTwo);
 	}
 	
 
@@ -72,7 +74,7 @@ public class MathController {
 		if (!NumberConversion.isNumeric(number)) {
 			throw new UnSuportedMathOperationException("Please set a numeric value !");
 		}
-		return math.squareRoot(number);
+		return services.squareRoot(number);
 	}
 
 	
